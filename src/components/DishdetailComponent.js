@@ -10,14 +10,13 @@ class Dishdetail extends Component {
         }
     }
 
-    formatDate({ date }) {
+    formatDate( date ) {
         return new Date(date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "short",
           day: "numeric"
         });
       }
-
 
     renderDish(dish) {
         if (dish != null) {
@@ -49,7 +48,7 @@ class Dishdetail extends Component {
 
                     <li key={comments.id} >
                         <p>{comments.comment}</p>
-                        <p>--{comments.author},{this.formatDate({date})}</p>
+                        <p>--{comments.author},{this.formatDate(date)}</p>
                     </li>
 
 
