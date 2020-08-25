@@ -1,16 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
-class Dishdetail extends Component {
 
-    constructor(props){
-        super(props)
-        this.state = {
-
-        }
-    }
-
-    formatDate( date ) {
+    function FormatDate( {date} ) {
         return new Date(date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "short",
@@ -18,7 +10,7 @@ class Dishdetail extends Component {
         });
       }
 
-    renderDish(dish) {
+    function RenderDish({dish}) {
         if (dish != null) {
             return(
                 <Card>
@@ -37,7 +29,7 @@ class Dishdetail extends Component {
         }
     }
 
-    renderComments(comments){
+    function RenderComments({comments}){
 
         if (comments != null) {
 
@@ -48,7 +40,7 @@ class Dishdetail extends Component {
 
                     <li key={comments.id} >
                         <p>{comments.comment}</p>
-                        <p>--{comments.author},{this.formatDate(date)}</p>
+                        <p>--{comments.author},<FormatDate date={date}/></p>
                     </li>
 
 
@@ -71,19 +63,19 @@ class Dishdetail extends Component {
         }
     }
 
-    render(){
+    const DishDetail = (props) => {
 
         // console.log(this.props.dishSelect)
-        const {dishSelect} = this.props;
+        const {dishSelect} = props;
 
         return dishSelect?(
             <div className="container">
                 <div className="row">
                 <div className="col-12 col-md-5 m-1">
-                    {this.renderDish(dishSelect)}
+                    <RenderDish dish={dishSelect} />
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        {this.renderComments(dishSelect.comments)}
+                        <RenderComments comments = {dishSelect.comments} />
                     </div>
             </div>
             </div>
@@ -92,6 +84,5 @@ class Dishdetail extends Component {
         )
     }
 
-}
 
-export default Dishdetail 
+export default DishDetail  
