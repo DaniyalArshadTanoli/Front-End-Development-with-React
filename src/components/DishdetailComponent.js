@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle, BreadcrumbItem, Breadcrumb, Button, Modal, ModalHeader, ModalBody, Input, Form, FormGroup, Label, Col, Row  } from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle, BreadcrumbItem, Breadcrumb, Button, Modal, ModalHeader, ModalBody, Label, Col, Row  } from "reactstrap";
 import {Link} from "react-router-dom"; 
 import {Control, LocalForm, Errors } from 'react-redux-form';
 import Loading from './LoadingComponent';
 import { baseUrl } from '../shared/bsaeUrl';
-
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
     function FormatDate( {date} ) {
         return new Date(date).toLocaleDateString("en-US", {
@@ -18,13 +18,17 @@ import { baseUrl } from '../shared/bsaeUrl';
         if (dish != null) {
             return (
                 <div>
-                    <Card>
-                        <CardImg width="100%" src={ baseUrl + dish.image } alt={dish.name} />
-                        <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
-                        </CardBody>
-                    </Card>
+                    <FadeTransform in transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                    }}>
+                        <Card>
+                            <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+                            <CardBody>
+                                <CardTitle>{dish.name}</CardTitle>
+                                <CardText>{dish.description}</CardText>
+                            </CardBody>
+                        </Card>
+                    </FadeTransform>
                 </div>
             );
         }
@@ -43,12 +47,12 @@ import { baseUrl } from '../shared/bsaeUrl';
 
                 let date = comments.date
                 return(
-
-                    <li key={comments.id} >
-                        <p>{comments.comment}</p>
-                        <p>--{comments.author},<FormatDate date={date}/></p>
-                    </li>
-
+                    <Fade in>
+                        <li key={comments.id} >
+                            <p>{comments.comment}</p>
+                            <p>--{comments.author},<FormatDate date={date} /></p>
+                        </li>
+                    </Fade>
                 )
             })
 
@@ -56,7 +60,9 @@ import { baseUrl } from '../shared/bsaeUrl';
                 <div>
                     <h4>Comments</h4>
                     <ul className="list-unstyled">
+                    <Stagger in>
                         {list}
+                    </Stagger>
                     </ul>
                     <div>
                     <CommentForm dishId={dishId} postComment={postComment} />
